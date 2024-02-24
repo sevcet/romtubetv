@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Romtube</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      background-image: url('rz.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .left-group {
+      width: 20%;
+      background-color: lightgray;
+      padding: 10px;
+      overflow-y: auto;
+      max-height: 100vh;
+      background-image: url('b.jpg'); /* Dodajte putanju do željene pozadinske slike */
+      background-size: cover; /* Podesite kako bi slika popunila cijelu pozadinu */
+      background-position: center;
+    }
+
+    .left-group button {
+      display: block;
+      margin-bottom: -10px;
+      width: 100%;
+      height: 100px;
+      background-color: transparent;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      border: none;
+      font-weight: bold;
+      font-size: 2em;
+    }
+
+    .right-group {
+      flex-grow: 1;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-gap: 4mm;
+      padding: 5px;
+    }
+
+    .right-group img {
+      width: 100%;
+      height: auto;
+      border: 3mm solid transparent;
+    }
+
+    .right-group img:hover {
+      border-color: yellow;
+    }
+  </style>
+  <script>
+    function changeImage(button) {
+      button.style.backgroundImage = "url('A2.png')";
+    }
+
+    function restoreImage(button) {
+      button.style.backgroundImage = "url('A1.png')";
+    }
+
+    function openNewPage(page) {
+      window.location.href = page;
+    }
+  </script>
+</head>
+<body>
+  <div class="left-group">
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('index.html')" style="background-image: url('A1.png');">LISTA - A</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('B.html')" style="background-image: url('A1.png');">LISTA - B</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('C.html')" style="background-image: url('A1.png');">LISTA - C</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('D.html')" style="background-image: url('A1.png');">LISTA - D</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('E.html')" style="background-image: url('A1.png');">LISTA - E</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('F.html')" style="background-image: url('A1.png');">LISTA - F</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('G.html')" style="background-image: url('A1.png');">LISTA - G</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('I.html')" style="background-image: url('A1.png');">LISTA - I</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('J.html')" style="background-image: url('A1.png');">LISTA - J</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('K.html')" style="background-image: url('A1.png');">LISTA - K</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('L.html')" style="background-image: url('A1.png');">LISTA - L</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('M.html')" style="background-image: url('A1.png');">LISTA - M</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('N.html')" style="background-image: url('A1.png');">LISTA - N</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('O.html')" style="background-image: url('A1.png');">LISTA - O</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('P.html')" style="background-image: url('A1.png');">LISTA - P</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('R.html')" style="background-image: url('A1.png');">LISTA - R</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('S.html')" style="background-image: url('A1.png');">LISTA - S</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('T.html')" style="background-image: url('A1.png');">LISTA - T</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('U.html')" style="background-image: url('A1.png');">LISTA - U</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('V.html')" style="background-image: url('A1.png');">LISTA - V</button>
+    <button onmouseover="changeImage(this)" onmouseout="restoreImage(this)" onclick="openNewPage('Z.html')" style="background-image: url('A1.png');">LISTA - Z</button>
+  </div>
+  <div class="right-group">
+    <img src="slike/mandimustafa.jpg" onclick="openNewPage('https://sevcet.github.io/romtube/MandiMustafa.html')">
+    <img src="slike/marjankurtic.jpg" onclick="openNewPage('https://sevcet.github.io/romtube/MarjanKurtic.html')">
+    <img src="slike/mikimutic.jpg" onclick="openNewPage('https://sevcet.github.io/romtube/MikiMutic.html')">
+    <img src="slike/muharemameti.jpg" onclick="openNewPage('https://sevcet.github.io/romtube/MuharemAmeti.html')">
+    <img src="slike/muharemserbezovski.jpg" onclick="openNewPage('https://sevcet.github.io/romtube/MuharemSerbezovski.html')">
+    <img src="slike/mustafasabanovic.jpg" onclick="openNewPage('https://sevcet.github.io/romtube/MustafaSabanovic.html')">
+
+  </div>
+</body>
+</html>
