@@ -1,27 +1,70 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Anjur Serbezovski Playlist</title>
+  <title>Anjur Serbezovski - YouTube Playlist Player</title>
   <script src="https://www.youtube.com/iframe_api"></script>
   <style>
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
+      overflow: hidden;
       background-color: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      color: white;
     }
 
     #player {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: 100%;
+      height: 90vh; /* Podesite visinu plejera */
+    }
+
+    #navigation-dot {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      border-radius: 50%;
+      transition: transform 0.2s ease;
+      pointer-events: none;
+    }
+
+    .playlist-item {
+      position: absolute;
+      left: 10vw;
+      top: 90vh; /* Pozicioniranje ispod plejera */
+      width: 80vw;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .playlist-item div {
+      width: 18vw; /* Širina svakog elementa u odnosu na širinu ekrana */
+      height: 10vh; /* Visina svakog elementa u odnosu na visinu ekrana */
+      margin: 1vh 0;
+      background-color: grey;
+      border: 2px solid transparent;
+    }
+
+    .playlist-item div.focused {
+      border-color: yellow;
     }
   </style>
 </head>
 <body>
   <div id="player"></div>
+  <div id="navigation-dot"></div>
+  <div class="playlist-item">
+    <div id="item-1">Item 1</div>
+    <div id="item-2">Item 2</div>
+    <div id="item-3">Item 3</div>
+    <div id="item-4">Item 4</div>
+    <div id="item-5">Item 5</div>
+  </div>
 
   <script>
     var player;
@@ -32,10 +75,10 @@
         width: '100%',
         playerVars: {
           listType: 'playlist',
-          list: 'PL94TXyduwHN0VVktcO4mCigAyf3UC7Ix3', // Zameni sa ID-em vaše YouTube plejliste
+          list: 'PL94TXyduwHN0VVktcO4mCigAyf3UC7Ix3', // Zamenite sa ID-em vaše YouTube plejliste
           fs: 1,
-          modestbranding: 1, // Smanjuje brendiranje
-          iv_load_policy: 3  // Onemogućava prikazivanje interaktivnih kartica
+          modestbranding: 1,
+          iv_load_policy: 3
         },
         events: {
           'onReady': onPlayerReady
@@ -46,6 +89,54 @@
     function onPlayerReady(event) {
       event.target.playVideo();
     }
+
+    // Navigacija
+    var currentIndex = 0;
+    var items = document.querySelectorAll('.playlist-item div');
+    var navDot = document.getElementById('navigation-dot');
+
+    function updateFocus() {
+      items.forEach((item, index) => {
+        if (index === currentIndex) {
+          item.classList.add('focused');
+          // Pomeranje navigacione tačke
+          const rect = item.getBoundingClientRect();
+          navDot.style.transform = `translate(${rect.left + window.scrollX + rect.width / 2 - navDot.offsetWidth / 2}px, ${rect.top + window.scrollY + rect.height / 2 - navDot.offsetHeight / 2}px)`;
+        } else {
+          item.classList.remove('focused');
+        }
+      });
+    }
+
+    document.addEventListener('keydown', (event) => {
+      switch (event.key) {
+        case 'ArrowLeft':
+          currentIndex = (currentIndex - 1 + items.length) % items.length;
+          break;
+        case 'ArrowRight':
+          currentIndex = (currentIndex + 1) % items.length;
+          break;
+        case 'ArrowUp':
+          if (currentIndex > 0) {
+            currentIndex--;
+          }
+          break;
+        case 'ArrowDown':
+          if (currentIndex < items.length - 1) {
+            currentIndex++;
+          }
+          break;
+        case 'Enter':
+          // Pokrenite odgovarajući video ili akciju
+          console.log('Pokrenite video za:', items[currentIndex].innerText);
+          break;
+        default:
+          break;
+      }
+      updateFocus();
+    });
+
+    updateFocus();
   </script>
 </body>
 </html>
