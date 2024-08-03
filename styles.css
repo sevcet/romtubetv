@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  background-image: url('rz.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.left-group {
+  width: 20%;
+  background-color: lightgray;
+  padding: 10px;
+  overflow-y: auto;
+  max-height: 100vh;
+  background-image: url('b.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.left-group button {
+  display: block;
+  margin-bottom: -10px;
+  width: 100%;
+  height: 100px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: none;
+  font-weight: bold;
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.right-group {
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 4mm;
+  padding: 5px;
+}
+
+.right-group img {
+  width: 100%;
+  height: auto;
+  border: 3mm solid transparent;
+  cursor: pointer;
+}
