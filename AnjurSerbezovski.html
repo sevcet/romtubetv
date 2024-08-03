@@ -1,26 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>YouTube Playlist Player</title>
+  <title>Anjur Serbezovski - YouTube Playlist Player</title>
   <script src="https://www.youtube.com/iframe_api"></script>
   <style>
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
+      background-color: black;
+      overflow: hidden;
     }
 
     #player {
+      position: relative;
       width: 100%;
       height: 100%;
+      z-index: 1;
+    }
+
+    .pointer {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background-color: yellow;
+      border-radius: 50%;
+      pointer-events: none;
+      transition: transform 0.1s;
+      z-index: 2;
     }
   </style>
 </head>
 <body>
   <div id="player"></div>
+  <div class="pointer" id="pointer"></div>
 
   <script>
     var player;
+    var pointer = document.getElementById('pointer');
+    var pointerX = window.innerWidth / 2;
+    var pointerY = window.innerHeight / 2;
+    var step = 20;
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
@@ -28,10 +48,10 @@
         width: '100%',
         playerVars: {
           listType: 'playlist',
-          list: 'PL94TXyduwHN0VVktcO4mCigAyf3UC7Ix3', // Zamenite sa ID-em vaše YouTube plejliste
+          list: 'PL94TXyduwHN0VVktcO4mCigAyf3UC7Ix3',
           fs: 1,
-          modestbranding: 1, // Smanjuje brendiranje
-          iv_load_policy: 3  // Onemogućava prikazivanje interaktivnih kartica
+          modestbranding: 1,
+          iv_load_policy: 3
         },
         events: {
           'onReady': onPlayerReady
@@ -43,14 +63,38 @@
       event.target.playVideo();
     }
 
-    // Dodata funkcija playVideo
-    function playVideo() {
-      if (player && player.playVideo) {
-        player.playVideo();
-      }
+    function movePointer() {
+      pointer.style.transform = `translate(${pointerX}px, ${pointerY}px)`;
     }
 
-    onYouTubeIframeAPIReady();
+    function navigate(event) {
+      switch (event.key) {
+        case 'ArrowLeft':
+          pointerX = Math.max(0, pointerX - step);
+          break;
+        case 'ArrowRight':
+          pointerX = Math.min(window.innerWidth - pointer.offsetWidth, pointerX + step);
+          break;
+        case 'ArrowUp':
+          pointerY = Math.max(0, pointerY - step);
+          break;
+        case 'ArrowDown':
+          pointerY = Math.min(window.innerHeight - pointer.offsetHeight, pointerY + step);
+          break;
+        case 'Enter':
+          var elements = document.elementsFromPoint(pointerX, pointerY);
+          var elementUnderPointer = elements[1]; // Prvi element je pointer, pa koristimo drugi
+          if (elementUnderPointer) {
+            elementUnderPointer.click();
+          }
+          break;
+      }
+      movePointer();
+    }
+
+    document.addEventListener('keydown', navigate);
+
+    movePointer();
   </script>
 </body>
 </html>
