@@ -29,12 +29,6 @@
       transition: transform 0.1s;
       z-index: 2;
     }
-
-    .highlight {
-      border: 2px solid yellow;
-      box-sizing: border-box;
-      z-index: 3;
-    }
   </style>
 </head>
 <body>
@@ -71,16 +65,6 @@
 
     function movePointer() {
       pointer.style.transform = `translate(${pointerX}px, ${pointerY}px)`;
-
-      var elements = document.elementsFromPoint(pointerX, pointerY);
-      elements.forEach(function(element) {
-        element.classList.remove('highlight');
-      });
-
-      var elementUnderPointer = elements[1]; // Prvi element je pointer, pa koristimo drugi
-      if (elementUnderPointer) {
-        elementUnderPointer.classList.add('highlight');
-      }
     }
 
     function navigate(event) {
