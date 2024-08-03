@@ -20,34 +20,6 @@
       height: 80%;
     }
 
-    .playlist-container {
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      overflow-x: hidden;
-      background-color: #202020;
-    }
-
-    .playlist-item {
-      margin: 5px;
-      padding: 10px;
-      width: 160px;
-      height: 90px;
-      background-color: #333;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      border: 2px solid transparent;
-      transition: border-color 0.3s;
-    }
-
-    .playlist-item.focused {
-      border-color: yellow;
-    }
-
     .pointer {
       position: absolute;
       width: 10px;
@@ -61,22 +33,14 @@
 </head>
 <body>
   <div id="player"></div>
-
-  <div class="playlist-container">
-    <div id="item-1" class="playlist-item">Song 1</div>
-    <div id="item-2" class="playlist-item">Song 2</div>
-    <div id="item-3" class="playlist-item">Song 3</div>
-    <div id="item-4" class="playlist-item">Song 4</div>
-    <!-- Dodajte još stavki po potrebi -->
-  </div>
-
   <div class="pointer" id="pointer"></div>
 
   <script>
     var player;
-    var currentIndex = 0;
-    var items = document.querySelectorAll('.playlist-item');
     var pointer = document.getElementById('pointer');
+    var pointerX = window.innerWidth / 2;
+    var pointerY = window.innerHeight / 2;
+    var step = 10; // Korak pomeranja pokazivača
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
@@ -99,45 +63,40 @@
       event.target.playVideo();
     }
 
-    function updateFocus() {
-      items.forEach((item, index) => {
-        if (index === currentIndex) {
-          item.classList.add('focused');
-          // Ažuriraj položaj pokazivača (pointer)
-          var rect = item.getBoundingClientRect();
-          pointer.style.transform = `translate(${rect.left + rect.width / 2 - pointer.offsetWidth / 2}px, ${rect.top + rect.height / 2 - pointer.offsetHeight / 2}px)`;
-        } else {
-          item.classList.remove('focused');
-        }
-      });
+    function movePointer() {
+      pointer.style.transform = `translate(${pointerX - pointer.offsetWidth / 2}px, ${pointerY - pointer.offsetHeight / 2}px)`;
     }
 
     function navigate(event) {
-      var maxIndex = items.length - 1;
       switch (event.key) {
         case 'ArrowLeft':
-          currentIndex = currentIndex > 0 ? currentIndex - 1 : maxIndex;
+          pointerX = Math.max(0, pointerX - step);
           break;
         case 'ArrowRight':
-          currentIndex = currentIndex < maxIndex ? currentIndex + 1 : 0;
+          pointerX = Math.min(window.innerWidth, pointerX + step);
           break;
         case 'ArrowUp':
-          currentIndex = currentIndex - 4 >= 0 ? currentIndex - 4 : currentIndex;
+          pointerY = Math.max(0, pointerY - step);
           break;
         case 'ArrowDown':
-          currentIndex = currentIndex + 4 <= maxIndex ? currentIndex + 4 : currentIndex;
+          pointerY = Math.min(window.innerHeight, pointerY + step);
           break;
         case 'Enter':
-          items[currentIndex].click();
+          // Implementirajte logiku za klik na element na kojem se pokazivač trenutno nalazi
+          // Npr. možete simulirati klik na element ispod pokazivača
+          var elementUnderPointer = document.elementFromPoint(pointerX, pointerY);
+          if (elementUnderPointer) {
+            elementUnderPointer.click();
+          }
           break;
       }
-      updateFocus();
+      movePointer();
     }
 
     document.addEventListener('keydown', navigate);
 
-    // Inicijalno postavljanje fokusa
-    updateFocus();
+    // Inicijalno postavljanje pokazivača u centar ekrana
+    movePointer();
   </script>
 </body>
 </html>
