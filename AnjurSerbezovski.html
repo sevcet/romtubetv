@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>YouTube Playlist Player</title>
+  <title>Anjur Serbezovski Playlist</title>
   <script src="https://www.youtube.com/iframe_api"></script>
   <style>
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     #player {
@@ -28,7 +32,7 @@
         width: '100%',
         playerVars: {
           listType: 'playlist',
-          list: 'PL94TXyduwHN0VVktcO4mCigAyf3UC7Ix3', // Zamenite sa ID-em vaše YouTube plejliste
+          list: 'PL94TXyduwHN0VVktcO4mCigAyf3UC7Ix3', // Zameni sa ID-em vaše YouTube plejliste
           fs: 1,
           modestbranding: 1, // Smanjuje brendiranje
           iv_load_policy: 3  // Onemogućava prikazivanje interaktivnih kartica
@@ -42,15 +46,6 @@
     function onPlayerReady(event) {
       event.target.playVideo();
     }
-
-    // Dodata funkcija playVideo
-    function playVideo() {
-      if (player && player.playVideo) {
-        player.playVideo();
-      }
-    }
-
-    onYouTubeIframeAPIReady();
   </script>
 </body>
 </html>
